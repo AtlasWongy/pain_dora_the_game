@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://rtx4l2dg4y73"]
+
+[ext_resource type="Script" path="res://Platforms/platform.gd" id="1_iybn8"]
+[ext_resource type="Texture2D" uid="uid://ukbqswklb3w1" path="res://Platforms/RedPlatform/Red_Platform.png" id="1_qggck"]
+
+[node name="RedPlatform" type="Node2D" node_paths=PackedStringArray("visibility_notifier")]
+position = Vector2(160, 90)
+script = ExtResource("1_iybn8")
+visibility_notifier = NodePath("VisibleOnScreenNotifier2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qggck")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(160, -10, 0, 20)

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=4 uid="uid://ba8rtt8q8fos2"]
+
+[ext_resource type="Texture2D" uid="uid://cqqpmfjq1qmpi" path="res://Platforms/Platform TileSet.png" id="1_7swbi"]
+[ext_resource type="Script" path="res://Platforms/platform.gd" id="2_hgnhd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f8x7g"]
+texture = ExtResource("1_7swbi")
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_8gt0d"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_f8x7g")
+
+[node name="InitialPlatform" type="TileMapLayer" node_paths=PackedStringArray("visibility_notifier")]
+tile_map_data = PackedByteArray("AAAAAAoAAAACAAAAAAABAAoAAAACAAAAAAACAAoAAAACAAAAAAADAAoAAAACAAAAAAAEAAoAAAACAAAAAAAFAAoAAAACAAAAAAAGAAoAAAADAAAAAAAHAAoAAAADAAAAAAAIAAoAAAADAAAAAAAJAAoAAAADAAAAAAAKAAoAAAADAAAAAAALAAoAAAADAAAAAAAMAAoAAAABAAAAAAANAAoAAAABAAAAAAAOAAoAAAABAAAAAAAPAAoAAAABAAAAAAAQAAoAAAABAAAAAAARAAoAAAABAAAAAAAAAAsAAAACAAAAAAABAAsAAAACAAAAAAACAAsAAAACAAAAAAADAAsAAAACAAAAAAAEAAsAAAACAAAAAAAFAAsAAAACAAAAAAAGAAsAAAADAAAAAAAHAAsAAAADAAAAAAAIAAsAAAADAAAAAAAJAAsAAAADAAAAAAAKAAsAAAADAAAAAAALAAsAAAADAAAAAAAMAAsAAAABAAAAAAANAAsAAAABAAAAAAAOAAsAAAABAAAAAAAPAAsAAAABAAAAAAAQAAsAAAABAAAAAAARAAsAAAABAAAAAAASAAsAAAABAAAAAAASAAoAAAABAAAAAAATAAoAAAABAAAAAAATAAsAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_8gt0d")
+script = ExtResource("2_hgnhd")
+visibility_notifier = NodePath("VisibleOnScreenNotifier2D")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(320, 90, 0, 20)

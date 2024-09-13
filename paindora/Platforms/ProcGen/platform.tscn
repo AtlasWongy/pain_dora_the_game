@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://mssj2ypeys1p"]
+
+[ext_resource type="Texture2D" uid="uid://cqqpmfjq1qmpi" path="res://Platforms/Platform TileSet.png" id="1_xchpu"]
+[ext_resource type="Script" path="res://Platforms/ProcGen/proc_gen.gd" id="2_ywsuq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cwwex"]
+texture = ExtResource("1_xchpu")
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_lfvtj"]
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_cwwex")
+
+[node name="Platform" type="TileMapLayer" node_paths=PackedStringArray("visibility_notifier")]
+tile_set = SubResource("TileSet_lfvtj")
+script = ExtResource("2_ywsuq")
+visibility_notifier = NodePath("VisibleOnScreenNotifier2D")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(320, 90, 0, 20)
