@@ -14,4 +14,4 @@ platform = ExtResource("2_c2qmp")
 [node name="InitialPlatform" parent="PlatformHandler" instance=ExtResource("5_cnex3")]
 
 [node name="Player" parent="." instance=ExtResource("5_g7j1m")]
-position = Vector2(73, 142)
+position = Vector2(14, 150)
