@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://bom8rb8452xbf"]
+
+[node name="PlatformGenerator" type="Node2D"]

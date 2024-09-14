@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Tile" load_steps=2 format=3 uid="uid://b2f0i3ikq2nlk"]
+
+[ext_resource type="Script" path="res://Platforms/Tile/tile.gd" id="1_gk4f7"]
+
+[resource]
+script = ExtResource("1_gk4f7")
+tile_pos = Vector2i(0, 0)
+tile_color = Vector2i(0, 0)
+is_skipped = false
