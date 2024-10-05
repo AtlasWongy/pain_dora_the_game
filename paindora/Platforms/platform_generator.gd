@@ -11,20 +11,21 @@ var atlas_tile_coordinates: Dictionary = {
 }
 
 var color_weights: PackedFloat32Array = PackedFloat32Array([0.7, 0.15, 0.15])
+var height_weights: PackedFloat32Array = PackedFloat32Array([0.5, 0.25, 0.25])
 
 var max_tile_height: int = -1
 var min_tile_height: int = 10
 var tile_height: int = 9
 var tile_absent_counter: int = 0
 
-func _ready() -> void:
-	generate_platform()
-# 	Might need to connect off view port signal
+# func _ready() -> void:
+# 	generate_platform()
 
-func generate_platform() -> void:
-	for pos_x in range(0, 5):
+func generate_platform() -> Platform:
+	for pos_x in range(0, 20):
 		build_tile(tile)
 		tile = update_tile_properties(tile, pos_x)
+	return platform
 		
 func build_tile(current_tile: Tile) -> void:
 	if !current_tile.is_skipped:
@@ -33,9 +34,18 @@ func build_tile(current_tile: Tile) -> void:
 
 func update_tile_properties(current_tile: Tile, x_coords: int) -> Tile:
 	if (tile_absent_counter == 2) and current_tile.is_skipped:
+		current_tile.height_changed = false
 		current_tile.is_skipped = false
 		current_tile.tile_pos = Vector2i(x_coords + 1, current_tile.tile_pos.y)
 		current_tile.tile_color = change_tile_color()
+		return current_tile
+	elif current_tile.height_changed:
+		if current_tile.is_skipped:
+			current_tile.is_skipped = false
+			current_tile.tile_pos = Vector2i(x_coords + 1, current_tile.tile_pos.y)
+			current_tile.tile_color = change_tile_color()
+		else:
+			current_tile.height_changed = false
 		return current_tile
 	else:
 		if !check_tile_should_skip():
@@ -43,6 +53,8 @@ func update_tile_properties(current_tile: Tile, x_coords: int) -> Tile:
 			current_tile.tile_pos = Vector2i(x_coords + 1, current_tile.tile_pos.y)
 			current_tile.tile_color = change_tile_color()
 		else:
+			if change_tile_height(current_tile)[1]:
+				current_tile.height_changed = true
 			current_tile.is_skipped = true
 		return current_tile
 
@@ -80,5 +92,19 @@ func adjust_tile_color_weights() -> void:
 		else:
 			color_weights[i] += 0.05
 
-func change_tile_height() -> bool:
-	return true
+func change_tile_height(current_tile: Tile) -> Array:
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	var height_change_instructions: Array = ["unchanged", "increase", "decrease"]
+	
+	var is_height_altered: String = height_change_instructions[rng.rand_weighted(height_weights)]
+	
+	if is_height_altered == "unchanged":
+		return [current_tile, false]
+	elif is_height_altered == "increase" and max_tile_height < tile_height - 1:
+		current_tile.tile_pos.y -= 1
+		return [current_tile, true]
+	elif is_height_altered == "decrease" and min_tile_height > tile_height + 1:
+		current_tile.tile_pos.y += 1
+		return [current_tile, true]
+	else:
+		return [current_tile, false]

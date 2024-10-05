@@ -22,3 +22,4 @@ script = ExtResource("1_tlqnu")
 visibility_notifier = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(320, 90, 0, 20)

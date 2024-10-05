@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c4hbdn4sh3cvc"]
 
 [ext_resource type="Script" path="res://Scenes/platform_handler.gd" id="1_gdeyt"]
-[ext_resource type="PackedScene" uid="uid://mssj2ypeys1p" path="res://Platforms/ProcGen/platform.tscn" id="2_c2qmp"]
+[ext_resource type="PackedScene" uid="uid://bom8rb8452xbf" path="res://Platforms/platform_generator.tscn" id="2_j46a8"]
 [ext_resource type="PackedScene" uid="uid://ba8rtt8q8fos2" path="res://Platforms/InitialPlatform/initial_platform.tscn" id="5_cnex3"]
 [ext_resource type="PackedScene" uid="uid://dq3uthakjtpoo" path="res://Player/player.tscn" id="5_g7j1m"]
 
@@ -9,7 +9,7 @@
 
 [node name="PlatformHandler" type="Node2D" parent="."]
 script = ExtResource("1_gdeyt")
-platform = ExtResource("2_c2qmp")
+platform_generator = ExtResource("2_j46a8")
 
 [node name="InitialPlatform" parent="PlatformHandler" instance=ExtResource("5_cnex3")]
 
