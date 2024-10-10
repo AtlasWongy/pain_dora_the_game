@@ -84,6 +84,12 @@ func _physics_process(delta: float) -> void:
 	current_platform.global_position.x += platform_movement_speed * delta
 	next_platform.global_position.x += platform_movement_speed * delta
 	
+func spawn_platform() -> Platform:
+	next_platform = platform_generator.instantiate().generate_platform()
+	next_platform.reparent(self)
+	next_platform.global_position = Vector2(320.0, 0.0)
+	return next_platform
+	
 func _on_spawn_next_platform() -> void:
 	current_platform.spawn_next_platform.disconnect(_on_spawn_next_platform)
 	current_platform.queue_free()
@@ -91,8 +97,3 @@ func _on_spawn_next_platform() -> void:
 	current_platform.spawn_next_platform.connect(_on_spawn_next_platform)
 	next_platform = spawn_platform()
 	
-func spawn_platform() -> Platform:
-	next_platform = platform_generator.instantiate().generate_platform()
-	next_platform.reparent(self)
-	next_platform.global_position = Vector2(320.0, 0.0)
-	return next_platform

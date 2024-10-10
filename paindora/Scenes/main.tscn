@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4hbdn4sh3cvc"]
+[gd_scene load_steps=7 format=3 uid="uid://c4hbdn4sh3cvc"]
 
 [ext_resource type="Script" path="res://Scenes/platform_handler.gd" id="1_gdeyt"]
 [ext_resource type="PackedScene" uid="uid://bom8rb8452xbf" path="res://Platforms/platform_generator.tscn" id="2_j46a8"]
+[ext_resource type="Script" path="res://Platforms/DeathZone/death_zone.gd" id="5_3625i"]
 [ext_resource type="PackedScene" uid="uid://ba8rtt8q8fos2" path="res://Platforms/InitialPlatform/initial_platform.tscn" id="5_cnex3"]
 [ext_resource type="PackedScene" uid="uid://dq3uthakjtpoo" path="res://Player/player.tscn" id="5_g7j1m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ar5o6"]
+size = Vector2(320, 10)
 
 [node name="Main" type="Node2D"]
 
@@ -15,3 +19,10 @@ platform_generator = ExtResource("2_j46a8")
 
 [node name="Player" parent="." instance=ExtResource("5_g7j1m")]
 position = Vector2(14, 150)
+
+[node name="DeathZone" type="Area2D" parent="."]
+position = Vector2(160, 215)
+script = ExtResource("5_3625i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+shape = SubResource("RectangleShape2D_ar5o6")

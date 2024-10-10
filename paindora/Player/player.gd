@@ -77,7 +77,7 @@ func check_tile_color(tile_map: TileMapLayer, rid: RID) -> void:
 		await timer.timeout
 		if get_color_state() != tile_color:
 			get_tree().paused = true
-    	
+		
 func change_color(event: InputEvent) -> void:
 	var color_select: String = OS.get_keycode_string(event.physical_keycode)
 	color_state = color_map[color_select]
