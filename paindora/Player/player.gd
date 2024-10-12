@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 enum ColorState {RED, BLUE, YELLOW}
 
@@ -6,8 +7,9 @@ enum ColorState {RED, BLUE, YELLOW}
 @onready var ledge_grabber: RayCast2D = $'LedgeGrabber'
 @onready var timer: Timer = $'PlayerTimer'
 @onready var coyote_timer: Timer = $'CoyoteTimer'
+@onready var visible_screen_notifier: VisibleOnScreenNotifier2D = $'VisibleOnScreenNotifier2D'
 
-var gravity: float = 45.0
+var gravity: float = 90.0
 var fall_gravity: float = 45.0
 var gravity_modifier: float = 2
 var jump_height: float = 48.0
@@ -33,6 +35,7 @@ func _ready() -> void:
 	color_state = color_map["Left"]
 	coyote_timer.wait_time = coyote_frames / 60.0
 	coyote_timer.timeout.connect(_on_coyote_timer_timeout)
+	visible_screen_notifier.screen_exited.connect(_on_player_screen_exited)
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
@@ -87,6 +90,9 @@ func get_color_state() -> Vector2i:
 	
 func _on_coyote_timer_timeout() -> void:
 	coyote = false
+	
+func _on_player_screen_exited() -> void:
+	SignalBus.player_died.emit()
 
 # extends CharacterBody2D
 # class_name Player

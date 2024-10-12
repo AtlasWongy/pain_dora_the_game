@@ -37,3 +37,7 @@ one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-56, -104)
+rect = Rect2(-10, -10, 10, 20)
