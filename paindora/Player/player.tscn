@@ -1,21 +1,22 @@
 [gd_scene load_steps=6 format=3 uid="uid://dq3uthakjtpoo"]
 
-[ext_resource type="Script" path="res://Player/player.gd" id="1_qdayt"]
+[ext_resource type="Script" path="res://Player/player_update.gd" id="1_rh5km"]
+[ext_resource type="Shader" path="res://Player/player.gdshader" id="1_sp47p"]
 [ext_resource type="Texture2D" uid="uid://dcjdxeiqhg14c" path="res://icon.svg" id="1_u3fjw"]
-[ext_resource type="Shader" path="res://Player/player.gdshader" id="1_y8qvc"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_deaxw"]
-shader = ExtResource("1_y8qvc")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jrq88"]
+shader = ExtResource("1_sp47p")
+shader_parameter/color = Vector4(1, 1, 1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fpu12"]
 size = Vector2(120, 120)
 
 [node name="Player" type="CharacterBody2D"]
-material = SubResource("ShaderMaterial_deaxw")
 scale = Vector2(0.125, 0.125)
-script = ExtResource("1_qdayt")
+script = ExtResource("1_rh5km")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_jrq88")
 texture = ExtResource("1_u3fjw")
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]

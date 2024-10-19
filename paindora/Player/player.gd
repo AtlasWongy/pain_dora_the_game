@@ -8,6 +8,7 @@ enum ColorState {RED, BLUE, YELLOW}
 @onready var timer: Timer = $'PlayerTimer'
 @onready var coyote_timer: Timer = $'CoyoteTimer'
 @onready var visible_screen_notifier: VisibleOnScreenNotifier2D = $'VisibleOnScreenNotifier2D'
+@onready var player_sprite: Sprite2D = $'PlayerSprite'
 
 var gravity: float = 90.0
 var fall_gravity: float = 45.0
@@ -26,16 +27,17 @@ var last_floor = false
 var jump_timer: float = 0.0
 
 var color_map: Dictionary = {
-	"Left": Vector2i(2, 0),
-	"Down": Vector2i(3, 0),
-	"Right": Vector2i(1, 0)
+	"Left": [Vector2i(2, 0), Vector4i(1.0, 0.0, 0.0, 1.0)],
+	"Down": [Vector2i(3, 0), Vector4i(0.0, 0.0, 1.0, 1.0)],
+	"Right": [Vector2i(1, 0), Vector4i(1.0, 1.0, 0.0, 1.0)]
 }
 
 func _ready() -> void:
-	color_state = color_map["Left"]
+	color_state = color_map["Left"][0]
 	coyote_timer.wait_time = coyote_frames / 60.0
 	coyote_timer.timeout.connect(_on_coyote_timer_timeout)
 	visible_screen_notifier.screen_exited.connect(_on_player_screen_exited)
+	player_sprite.material.set_shader_parameter("color", color_map["Left"][1])
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
@@ -57,6 +59,8 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 	velocity = velocity.lerp(velocity, 5.0 * delta)
 	is_grounded = raycast.is_colliding()
+	
+	# Can test ledge grab later
 	is_ledge_grabbed = ledge_grabber.is_colliding()
 	move_and_slide()
 	if is_grounded:
@@ -83,7 +87,8 @@ func check_tile_color(tile_map: TileMapLayer, rid: RID) -> void:
 		
 func change_color(event: InputEvent) -> void:
 	var color_select: String = OS.get_keycode_string(event.physical_keycode)
-	color_state = color_map[color_select]
+	color_state = color_map[color_select][0]
+	player_sprite.material.set_shader_parameter("color", color_map[color_select][1])
 	
 func get_color_state() -> Vector2i:
 	return color_state
