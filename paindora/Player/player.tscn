@@ -3,9 +3,9 @@
 [ext_resource type="Shader" path="res://Player/player.gdshader" id="1_sp47p"]
 [ext_resource type="Texture2D" uid="uid://dcjdxeiqhg14c" path="res://icon.svg" id="1_u3fjw"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jrq88"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7o2dx"]
 shader = ExtResource("1_sp47p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/color = Vector4(0.675, 0.196, 0.196, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fpu12"]
 size = Vector2(120, 120)
@@ -14,10 +14,11 @@ size = Vector2(120, 120)
 scale = Vector2(0.125, 0.125)
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_jrq88")
+material = SubResource("ShaderMaterial_7o2dx")
 texture = ExtResource("1_u3fjw")
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_fpu12")
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
