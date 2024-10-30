@@ -5,9 +5,9 @@ class_name PlatformGenerator
 @export var tile: Tile
 
 var atlas_tile_coordinates: Dictionary = {
-	0: Vector2i(2, 0),
-	1: Vector2i(3, 0),
-	2: Vector2i(1, 0)
+	0: Vector2i(5, 0),
+	1: Vector2i(6, 0),
+	2: Vector2i(7, 0)
 }
 
 var color_weights: PackedFloat32Array = PackedFloat32Array([0.7, 0.15, 0.15])
@@ -18,8 +18,8 @@ var min_tile_height: int = 10
 var tile_height: int = 9
 var tile_absent_counter: int = 0
 
-# func _ready() -> void:
-# 	generate_platform()
+func _ready() -> void:
+	generate_platform()
 
 func generate_platform() -> Platform:
 	for pos_x in range(0, 20):
@@ -30,7 +30,7 @@ func generate_platform() -> Platform:
 func build_tile(current_tile: Tile) -> void:
 	if !current_tile.is_skipped:
 		tile_absent_counter = 0
-		platform.set_cell(current_tile.tile_pos, 0, current_tile.tile_color, 0)
+		platform.set_cell(current_tile.tile_pos, 1, current_tile.tile_color, 0)
 
 func update_tile_properties(current_tile: Tile, x_coords: int) -> Tile:
 	if (tile_absent_counter == 2) and current_tile.is_skipped:

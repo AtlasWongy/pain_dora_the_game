@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://brrfsm03waws6"]
+[gd_scene load_steps=5 format=3 uid="uid://brrfsm03waws6"]
 
 [ext_resource type="Texture2D" uid="uid://cp78hoagufrvx" path="res://Platforms/Background/Background.png" id="1_2i74i"]
 [ext_resource type="PackedScene" uid="uid://ba8rtt8q8fos2" path="res://Platforms/InitialPlatform/initial_platform.tscn" id="1_r4j3f"]
-[ext_resource type="Script" path="res://Player/player_test.gd" id="1_x1856"]
 [ext_resource type="PackedScene" uid="uid://dq3uthakjtpoo" path="res://Player/player.tscn" id="2_nbh2m"]
 [ext_resource type="Script" path="res://Scenes/Test/player_test_controller.gd" id="3_1d75v"]
 
@@ -19,4 +18,3 @@ script = ExtResource("3_1d75v")
 
 [node name="Player" parent="PlayerTestController" instance=ExtResource("2_nbh2m")]
 position = Vector2(48, 141)
-script = ExtResource("1_x1856")

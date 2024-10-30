@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dq3uthakjtpoo"]
+[gd_scene load_steps=6 format=3 uid="uid://dq3uthakjtpoo"]
 
+[ext_resource type="Script" path="res://Player/player_test.gd" id="1_5vmp2"]
 [ext_resource type="Shader" path="res://Player/player.gdshader" id="1_sp47p"]
 [ext_resource type="Texture2D" uid="uid://dcjdxeiqhg14c" path="res://icon.svg" id="1_u3fjw"]
 
@@ -12,6 +13,8 @@ size = Vector2(120, 120)
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(0.125, 0.125)
+script = ExtResource("1_5vmp2")
+jump_height = 24.0
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_7o2dx")
@@ -28,7 +31,7 @@ target_position = Vector2(0, 70)
 
 [node name="LedgeGrabber" type="RayCast2D" parent="."]
 modulate = Color(0, 0.501961, 0, 1)
-target_position = Vector2(80, 0)
+target_position = Vector2(128, 0)
 
 [node name="PlayerTimer" type="Timer" parent="."]
 process_callback = 0

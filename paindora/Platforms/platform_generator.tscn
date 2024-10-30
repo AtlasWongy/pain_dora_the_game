@@ -9,7 +9,7 @@ script = ExtResource("2_tfugh")
 height_changed = false
 is_skipped = false
 tile_pos = Vector2i(0, 9)
-tile_color = Vector2i(2, 0)
+tile_color = Vector2i(5, 0)
 
 [node name="PlatformGenerator" type="Node2D" node_paths=PackedStringArray("platform")]
 script = ExtResource("1_ohcre")

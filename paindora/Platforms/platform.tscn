@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cekli5y6ki46h"]
+[gd_scene load_steps=7 format=3 uid="uid://cekli5y6ki46h"]
 
 [ext_resource type="Texture2D" uid="uid://cqqpmfjq1qmpi" path="res://Platforms/Platform TileSet.png" id="1_2yaaq"]
 [ext_resource type="Script" path="res://Platforms/platform.gd" id="1_tlqnu"]
+[ext_resource type="Texture2D" uid="uid://dy5p4qbegvrum" path="res://Platforms/TileSet.png" id="2_b1g6i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pgwqp"]
 texture = ExtResource("1_2yaaq")
@@ -12,9 +13,23 @@ texture = ExtResource("1_2yaaq")
 3:0/0 = 0
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4flbx"]
+texture = ExtResource("2_b1g6i")
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
 [sub_resource type="TileSet" id="TileSet_whwid"]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_pgwqp")
+sources/1 = SubResource("TileSetAtlasSource_4flbx")
 
 [node name="Platform" type="TileMapLayer" node_paths=PackedStringArray("visibility_notifier")]
 tile_set = SubResource("TileSet_whwid")

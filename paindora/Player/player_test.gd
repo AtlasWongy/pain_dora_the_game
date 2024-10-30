@@ -20,9 +20,12 @@ var color_map: Dictionary = {
 	"Right": [Vector2i(7, 0), Vector4(0.984, 0.949, 0.212, 1.0)]
 }
 
-var is_jumping: bool = false
 var can_coyote: bool = false
-var is_on_floor_last_frame: bool
+var can_grab: bool = true
+var is_jumping: bool = false
+var is_on_floor_last_frame: bool = false
+var is_ledge_grabbed: bool = false
+var jump_timer: float
 var color_state: Vector2i
 
 func _ready() -> void:
@@ -35,18 +38,23 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("ui_accept"):
-		if is_on_floor() or can_coyote:
-			velocity.y = - (2 * jump_height) / apex_duration
-			jump_gravity = - (velocity.y / apex_duration)
-			is_jumping = true
-			
+		jump_timer = 0.1
+		
 	if event.is_action_released("ui_accept"):
-		pass
+		jump_gravity *= 2
 		
 	if event.is_action_pressed("change_color"):
 		change_color(event)
 
 func _physics_process(delta: float) -> void:
+	
+	if jump_timer > 0.0 and (is_on_floor() or can_coyote):
+		velocity.y = - (2 * jump_height) / apex_duration
+		print("The velocty - y: ", velocity.y)
+		jump_gravity = - (velocity.y / apex_duration)
+		
+		is_jumping = true
+	print("The jump gravity is: ", jump_gravity)
 	if not is_on_floor():
 		velocity.y += jump_gravity * delta
 	else:
@@ -61,7 +69,11 @@ func _physics_process(delta: float) -> void:
 		coyote_timer.start()
 		can_coyote = true
 	
+	if ledge_grabber.is_colliding() and !is_on_floor():
+		velocity.y -= jump_height / 2.0
+	
 	is_on_floor_last_frame = is_on_floor()
+	jump_timer -= delta
 	
 func check_tile_color(tile_map: TileMapLayer, rid: RID) -> void:
 	var tile_color: Vector2i = tile_map.get_cell_atlas_coords(tile_map.get_coords_for_body_rid(rid))
@@ -71,9 +83,9 @@ func check_tile_color(tile_map: TileMapLayer, rid: RID) -> void:
 		await timer.timeout
 		
 		if color_state != tile_color:
-			print("Can send death signal")
+			SignalBus.player_died.emit()
 	
-func change_color(event: InputEvent):
+func change_color(event: InputEvent) -> void:
 	var color_select: String = OS.get_keycode_string(event.physical_keycode)
 	color_state = color_map[color_select][0]
 	player_sprite.material.set_shader_parameter("color", color_map[color_select][1])
@@ -81,5 +93,5 @@ func change_color(event: InputEvent):
 func _on_coyote_timer_timeout() -> void:
 	can_coyote = false
 
-func _on_player_screen_exited():
+func _on_player_screen_exited() -> void:
 	SignalBus.player_died.emit()
