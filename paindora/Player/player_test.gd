@@ -38,7 +38,10 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("ui_accept"):
-		jump_timer = 0.1
+		if is_on_floor() or can_coyote:
+			velocity.y = - (2 * jump_height) / apex_duration
+			jump_gravity = - (velocity.y / apex_duration)
+			is_jumping = true
 		
 	if event.is_action_released("ui_accept"):
 		jump_gravity *= 2
@@ -47,18 +50,12 @@ func _input(event: InputEvent) -> void:
 		change_color(event)
 
 func _physics_process(delta: float) -> void:
-	
-	if jump_timer > 0.0 and (is_on_floor() or can_coyote):
-		velocity.y = - (2 * jump_height) / apex_duration
-		print("The velocty - y: ", velocity.y)
-		jump_gravity = - (velocity.y / apex_duration)
-		
-		is_jumping = true
-	print("The jump gravity is: ", jump_gravity)
+
 	if not is_on_floor():
 		velocity.y += jump_gravity * delta
 	else:
 		is_jumping = false
+		can_grab = true
 	
 	move_and_slide()
 	
@@ -69,11 +66,12 @@ func _physics_process(delta: float) -> void:
 		coyote_timer.start()
 		can_coyote = true
 	
-	if ledge_grabber.is_colliding() and !is_on_floor():
-		velocity.y -= jump_height / 2.0
+	if ledge_grabber.is_colliding() and !is_on_floor() and can_grab:
+		if velocity.y > 0:
+			can_grab = false
+			velocity.y = - (velocity.y)
 	
 	is_on_floor_last_frame = is_on_floor()
-	jump_timer -= delta
 	
 func check_tile_color(tile_map: TileMapLayer, rid: RID) -> void:
 	var tile_color: Vector2i = tile_map.get_cell_atlas_coords(tile_map.get_coords_for_body_rid(rid))

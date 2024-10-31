@@ -18,3 +18,4 @@ script = ExtResource("3_1d75v")
 
 [node name="Player" parent="PlayerTestController" instance=ExtResource("2_nbh2m")]
 position = Vector2(48, 141)
+jump_height = 48.0
