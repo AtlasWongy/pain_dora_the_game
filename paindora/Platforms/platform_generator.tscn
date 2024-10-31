@@ -1,19 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bom8rb8452xbf"]
+[gd_scene load_steps=3 format=3 uid="uid://bom8rb8452xbf"]
 
-[ext_resource type="Script" path="res://Platforms/platform_generator.gd" id="1_ohcre"]
-[ext_resource type="Script" path="res://Platforms/Tile/tile.gd" id="2_tfugh"]
+[ext_resource type="Script" path="res://Platforms/platform_generator_new.gd" id="1_5md47"]
 [ext_resource type="PackedScene" uid="uid://cekli5y6ki46h" path="res://Platforms/platform.tscn" id="3_h84em"]
 
-[sub_resource type="Resource" id="Resource_v86db"]
-script = ExtResource("2_tfugh")
-height_changed = false
-is_skipped = false
-tile_pos = Vector2i(0, 9)
-tile_color = Vector2i(5, 0)
-
-[node name="PlatformGenerator" type="Node2D" node_paths=PackedStringArray("platform")]
-script = ExtResource("1_ohcre")
-platform = NodePath("Platform")
-tile = SubResource("Resource_v86db")
+[node name="PlatformGenerator" type="Node2D"]
+script = ExtResource("1_5md47")
 
 [node name="Platform" parent="." instance=ExtResource("3_h84em")]
