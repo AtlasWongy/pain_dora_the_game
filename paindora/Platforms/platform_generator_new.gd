@@ -29,9 +29,8 @@ func _ready() -> void:
 
 func generate_platform() -> Platform:
 	for pos_x in range(0, 20):
-		continue
-	# Maybe try update tile properties first
-	# Then build the tile
+		update_tile_properties(tile, pos_x)
+		build_tile(tile)
 	return platform
 
 func build_tile(current_tile: Tile) -> void:
@@ -39,8 +38,60 @@ func build_tile(current_tile: Tile) -> void:
 		tile_absent_counter = 0
 		platform.set_cell(current_tile.tile_pos, 1, current_tile.tile_color, 0)
 
-func update_tile_properties(current_tile: Tile, x_coord: int) -> void:
-	pass
+func update_tile_properties(current_tile: Tile, x_coords: int) -> Tile:
+	print("tile absent counter: ", tile_absent_counter)
+	if tile_absent_counter == max_tile_gap:
+		current_tile.height_changed = false
+		current_tile.is_skipped = false
+		current_tile.tile_pos = Vector2i(x_coords, current_tile.tile_pos.y)
+		current_tile.tile_color = change_tile_color()
+		return current_tile
+	else:
+		if check_tile_should_skip():
+			current_tile.is_skipped = true
+			return current_tile
+		else:
+			current_tile.height_changed = false
+			current_tile.is_skipped = false
+			current_tile.tile_pos = Vector2i(x_coords, current_tile.tile_pos.y)
+			current_tile.tile_color = change_tile_color()
+			return current_tile
+	return current_tile
+	
+func check_tile_should_skip() -> bool:
+	if tile_absent_counter < min_tile_gap and tile_absent_counter != 0:
+		tile_absent_counter += 1
+		return true
+	else:
+		var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+		var skip_tile_weights: PackedFloat32Array = PackedFloat32Array([0.65, 0.35])
+		var is_tile_skipped: Array = [true, false]
+		if is_tile_skipped[rng.rand_weighted(skip_tile_weights)] == true:
+			tile_absent_counter += 1
+			return true
+		else:
+			return false
+
+func change_tile_color() -> Vector2i:
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	var new_tile_color: Vector2i = atlas_tile_coordinates[rng.rand_weighted(color_weights)]
+	adjust_tile_color_weights()
+	return new_tile_color
+	
+func adjust_tile_color_weights() -> void:
+	var max_val: float = 0.0
+
+	for weight in color_weights:
+		if max_val < weight:
+			max_val = weight
+
+	var max_val_idx: int = color_weights.find(max_val)
+
+	for i in range(0, color_weights.size(), 1):
+		if i == max_val_idx:
+			color_weights[i] -= 0.10
+		else:
+			color_weights[i] += 0.05
 
 #extends Node
 #class_name PlatformGenerator
@@ -114,7 +165,7 @@ func update_tile_properties(current_tile: Tile, x_coord: int) -> void:
 			#return false
 	#else:
 		#return false
-		#
+		
 #func change_tile_color() -> Vector2i:
 	#var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	#var new_tile_color: Vector2i = atlas_tile_coordinates[rng.rand_weighted(color_weights)]
