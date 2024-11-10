@@ -47,6 +47,15 @@ func update_tile_properties(current_tile: Tile, x_coords: int) -> Tile:
 		current_tile.tile_color = change_tile_color()
 		return current_tile
 	else:
+		if current_tile.is_skipped and tile_absent_counter == 1:
+			var res: Array = check_change_tile_height()
+			if res[1]:
+				if res[0] == "increase":
+					current_tile.tile_pos = Vector2i(x_coords, current_tile.tile_pos.y + 1)
+				elif res[0] == "decrease":
+					current_tile.tile_pos = Vector2i(x_coords, current_tile.tile_pos.y - 1)
+				current_tile.is_skipped = false
+				return current_tile 
 		if check_tile_should_skip():
 			current_tile.is_skipped = true
 			return current_tile
@@ -93,6 +102,43 @@ func adjust_tile_color_weights() -> void:
 		else:
 			color_weights[i] += 0.05
 
+func check_change_tile_height() -> Array:
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	var height_change_instructions: Array = ["unchanged", "increase", "decrease"]
+	var is_height_altered: String = height_change_instructions[rng.rand_weighted(height_weights)]
+	
+	if is_height_altered == "unchanged":
+		return [is_height_altered, false]
+	elif is_height_altered == "increase" and max_tile_height < tile_height - 1:
+		return [is_height_altered, true]
+	elif is_height_altered == "decrease" and min_tile_height > tile_height + 1:
+		return [is_height_altered, true]
+	else:
+		# Add a log here MAYBE
+		# Maybe can take away unchange
+		# I am entering here!
+		print("Never suppose to enter this path")
+		return [is_height_altered, false]
+
+func change_tile_height(current_tile: Tile) -> void:
+	pass
+
+#func change_tile_height(current_tile: Tile) -> Array:
+	#var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	#var height_change_instructions: Array = ["unchanged", "increase", "decrease"]
+	#
+	#var is_height_altered: String = height_change_instructions[rng.rand_weighted(height_weights)]
+	#
+	#if is_height_altered == "unchanged":
+		#return [current_tile, false]
+	#elif is_height_altered == "increase" and max_tile_height < tile_height - 1:
+		#current_tile.tile_pos.y -= 1
+		#return [current_tile, true]
+	#elif is_height_altered == "decrease" and min_tile_height > tile_height + 1:
+		#current_tile.tile_pos.y += 1
+		#return [current_tile, true]
+	#else:
+		#return [current_tile, false]
 #extends Node
 #class_name PlatformGenerator
 #
